@@ -17,6 +17,7 @@ dependencies = []
 analysis = ["pandas", "openpyxl"]
 dev = ["pytest>=7", "ruff", "mypy"]
 local = ["ctranslate2>=4", "sentencepiece>=0.2"]
+wordlists = ["wordfreq[cjk]>=3"]
 
 [project.urls]
 Homepage = "https://github.com/odomojuli/babelebab"
