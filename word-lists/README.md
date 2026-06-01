@@ -42,6 +42,26 @@ Notes:
 - CJK lists (`zho`, `jpn`, `kor`) require tokenizer modules, pulled in by the
   `wordlists` extra (`wordfreq[cjk]`).
 
+## Leipzig lists — gap-fill (run locally)
+
+Languages wordfreq doesn't cover are filled from the
+[Leipzig Corpora Collection](https://wortschatz.uni-leipzig.de) (CC BY),
+producing `<iso3>/<iso3>_leipzig_top5000.csv` in the **same schema** as above.
+Design is documented in `docs/specs/0001-multilingual-wordlist-gapfill.md`.
+
+The corpora ship as per-language archives, so this is a local step (no network
+at run time once downloaded):
+
+1. Download a corpus (e.g. a `*_100K` package) from
+   `https://wortschatz.uni-leipzig.de/en/download/<Language>`.
+2. `python scripts/build_wordlists_leipzig.py --input <dir-or-file> --top-n 5000`
+
+Targets the gaps where Leipzig has data: Telugu (`tel`), Marathi (`mar`),
+Gujarati (`guj`), Hausa (`hau`), Javanese (`jav`), Western Punjabi (`pnb`),
+Bhojpuri (`bho`). Yue / Wu / Southern Min / Levantine Arabic remain
+lower-confidence or absent. Attribution: © Universität Leipzig / Sächsische
+Akademie der Wissenschaften / InfAI, CC BY.
+
 ## Other lists
 
 - `fra/fra_french.txt` — large French word list (pre-existing).
