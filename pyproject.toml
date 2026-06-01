@@ -15,10 +15,11 @@ dependencies = []
 
 [project.optional-dependencies]
 analysis = ["pandas", "openpyxl"]
-dev = ["pytest>=7", "ruff", "mypy"]
+dev = ["pytest>=7", "ruff", "mypy", "pysbd>=0.3", "simplemma>=1"]
 local = ["ctranslate2>=4", "sentencepiece>=0.2"]
 wordlists = ["wordfreq[cjk]>=3"]
 lemmatize = ["simplemma>=1"]
+sbd = ["pysbd>=0.3"]
 
 [project.urls]
 Homepage = "https://github.com/odomojuli/babelebab"
