@@ -1,6 +1,7 @@
 import argparse
 import os
 
+
 def split_file_into_chunks(input_file, lines_per_chunk=1000):
     """
     Splits a file into smaller files with a specified number of lines each.

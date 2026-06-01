@@ -1,5 +1,6 @@
 import re
 
+
 def sentence_boundary_detection(text):
     # This function will be used with re.sub to replace acronyms and numerics with unique tokens
     def replace_with_token(match, token_base, counter_dict):
@@ -34,6 +35,7 @@ def sentence_boundary_detection(text):
 
     return sentences
 
-text = "The U.S. and E.U. have a GDP of 2.5 and 3.8 trillion respectively! What do you think? Dr. Smith agrees. Also, the value is 5."
-for sentence in sentence_boundary_detection(text):
-    print(sentence)
+if __name__ == "__main__":
+    text = "The U.S. and E.U. have a GDP of 2.5 and 3.8 trillion respectively! What do you think? Dr. Smith agrees. Also, the value is 5."
+    for sentence in sentence_boundary_detection(text):
+        print(sentence)

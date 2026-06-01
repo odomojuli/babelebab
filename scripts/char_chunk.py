@@ -1,6 +1,7 @@
 import argparse
 import os
 
+
 def split_file_into_char_chunks(input_file, chars_per_chunk=280):
     """
     Splits a file into smaller files with a specified number of characters each.

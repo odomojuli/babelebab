@@ -1,0 +1,41 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "babelebab"
+version = "0.0.1"
+description = "A divide-and-conquer toolkit for multilingual NLP: sentence segmentation and core-vocabulary translation analysis."
+readme = "README.md"
+requires-python = ">=3.9"
+license = { file = "LICENSE" }
+authors = [{ name = "odomojuli" }]
+keywords = ["nlp", "sentence-segmentation", "tokenization", "multilingual", "translation"]
+dependencies = []
+
+[project.optional-dependencies]
+analysis = ["pandas", "openpyxl"]
+dev = ["pytest>=7", "ruff", "mypy"]
+
+[project.urls]
+Homepage = "https://github.com/odomojuli/babelebab"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]
+
+[tool.ruff]
+src = ["src", "tests", "scripts"]
+target-version = "py39"
+line-length = 100
+
+[tool.ruff.lint]
+extend-select = ["I"]
+
+[tool.mypy]
+python_version = "3.10"
+files = ["src"]
+ignore_missing_imports = true

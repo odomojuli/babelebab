@@ -1,5 +1,7 @@
 import unittest
-from split_sentences import split_sentences
+
+from babelebab.segmentation import split_sentences
+
 
 class TestSentenceSplitting(unittest.TestCase):
     
@@ -108,7 +110,7 @@ class TestSentenceSplitting(unittest.TestCase):
         expected = ["Her email is Jane.Doe@example.com.", "I sent her an email."]
         self.assertEqual(split_sentences(text), expected)
 
-    def test_web_addresses(self):
+    def test_web_addresses_with_path(self):
         text = "The site is: https://www.example.50.com/new-site/awesome_content.html. Please check it out."
         expected = ["The site is: https://www.example.50.com/new-site/awesome_content.html.", "Please check it out."]
         self.assertEqual(split_sentences(text), expected)

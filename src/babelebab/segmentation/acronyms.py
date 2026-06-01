@@ -1,5 +1,6 @@
 import re
 
+
 def extract_acronyms(text):
     """
     Extracts acronyms that are formatted with individual letters followed by periods 
@@ -22,4 +23,5 @@ def extract_acronyms(text):
     pattern = r'\b(?:[a-zA-Z]\.){2,}'
     return re.findall(pattern, text)
 
-print(extract_acronyms('Mr.'))
+if __name__ == "__main__":
+    print(extract_acronyms("Mr."))

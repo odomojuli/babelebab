@@ -1,5 +1,6 @@
 import re
 
+
 def extract_numerics(s: str) -> bool:
     """
     Determines if a given string matches the pattern ^\d*\.?\d+$
