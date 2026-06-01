@@ -7,7 +7,7 @@ from dataclasses import dataclass
 from pathlib import Path
 
 
-def _default_wordlists_root() -> Path:
+def default_wordlists_root() -> Path:
     env = os.environ.get("BABELEBAB_WORDLISTS_ROOT")
     if env:
         return Path(env)
@@ -34,7 +34,7 @@ class Lexicon:
     ) -> None:
         self.lang = lang
         self._root = (
-            Path(wordlists_root) if wordlists_root is not None else _default_wordlists_root()
+            Path(wordlists_root) if wordlists_root is not None else default_wordlists_root()
         )
         self._entries: dict[str, WordStats] | None = None
 
