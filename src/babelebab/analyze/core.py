@@ -72,7 +72,7 @@ def analyze(
     ``docs/specs/0002-analyze-lexicon-stage.md`` and ``docs/specs/0003-lemmatization.md``.
     """
     lex = lexicon if lexicon is not None else Lexicon(lang)
-    sentences = split_sentences(text) if text.strip() else []
+    sentences = split_sentences(text, lang) if text.strip() else []
     words = tokenize_words(text)
     lemma_fn = lemmatizer if lemmatizer is not None else (default_lemmatizer if lemmatize else None)
 

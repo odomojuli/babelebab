@@ -54,7 +54,7 @@ def pipeline(
         detection = detector.detect(text) if detector is not None else detect_language(text)
         src_lang = detection.lang
 
-    sentences = split_sentences(text) if text.strip() else []
+    sentences = split_sentences(text, src_lang or "en") if text.strip() else []
 
     analysis: AnalysisResult | None = None
     if analyze_text and src_lang:
