@@ -2,10 +2,12 @@
 from __future__ import annotations
 
 import statistics
+from collections.abc import Callable
 from dataclasses import asdict, dataclass, field
 from typing import Any
 
 from ..segmentation import split_sentences
+from .lemmatize import default_lemmatizer
 from .lexicon import Lexicon
 from .tokenize import tokenize_words
 
@@ -17,6 +19,7 @@ class TokenInfo:
     rank: int | None = None
     zipf: float | None = None
     freq_per_million: float | None = None
+    lemma: str | None = None
 
 
 @dataclass
@@ -54,6 +57,8 @@ def analyze(
     lang: str,
     *,
     lexicon: Lexicon | None = None,
+    lemmatize: bool = True,
+    lemmatizer: Callable[[str, str], str] | None = None,
     rare_threshold: float = 3.0,
     top_thresholds: tuple[int, ...] = (100, 1000, 5000),
     include_tokens: bool = True,
@@ -61,11 +66,15 @@ def analyze(
     """Analyze ``text`` in ``lang`` against its frequency wordlist.
 
     Returns per-token frequency annotations plus aggregate coverage and
-    difficulty metrics. See ``docs/specs/0002-analyze-lexicon-stage.md``.
+    difficulty metrics. When ``lemmatize`` is on, a surface form that misses the
+    lexicon is retried via its lemma (``jumps`` -> ``jump``); pass a custom
+    ``lemmatizer(word, lang) -> str`` to override the default. See
+    ``docs/specs/0002-analyze-lexicon-stage.md`` and ``docs/specs/0003-lemmatization.md``.
     """
     lex = lexicon if lexicon is not None else Lexicon(lang)
     sentences = split_sentences(text) if text.strip() else []
     words = tokenize_words(text)
+    lemma_fn = lemmatizer if lemmatizer is not None else (default_lemmatizer if lemmatize else None)
 
     tokens: list[TokenInfo] = []
     zipfs: list[float] = []
@@ -76,6 +85,14 @@ def analyze(
 
     for word in words:
         stats = lex.lookup(word)
+        matched_lemma: str | None = None
+        if stats is None and lemma_fn is not None:
+            lemma = lemma_fn(word, lang)
+            if lemma and lemma != word:
+                lemma_stats = lex.lookup(lemma)
+                if lemma_stats is not None:
+                    stats = lemma_stats
+                    matched_lemma = lemma
         if stats is None:
             tokens.append(TokenInfo(text=word, known=False))
             unknown_seen.setdefault(word, None)
@@ -94,6 +111,7 @@ def analyze(
                 rank=stats.rank,
                 zipf=stats.zipf,
                 freq_per_million=stats.freq_per_million,
+                lemma=matched_lemma,
             )
         )
 
